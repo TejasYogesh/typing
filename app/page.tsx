@@ -16,7 +16,7 @@ export default function Home() {
           </span> */}
 
           <h1 className="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
-            Let’s Code from here
+            Introducing Syntax Error
           </h1>
 
           <p className="text-gray-400 text-lg mb-8">
