@@ -4,10 +4,10 @@
 import Editor, { OnMount } from "@monaco-editor/react"
 import { useRef } from "react"
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button"
 import LanguageSelector from "../../components/LanguageSelector";
 import SeriousModeButton from "../../components/SeriousMode";
 import Output from "../../components/Output";
+import HandleSave from "../../components/HandleSave";
 
 
 export default function EditorPage() {
@@ -35,24 +35,6 @@ export default function EditorPage() {
         setCode(newCode);
     };
 
-    const handleSave = () => {
-        // pick extension based on language
-        const extensionMap: Record<string, string> = {
-            cpp: "cpp",
-            javascript: "js",
-            typescript: "ts",
-            python: "py",
-            java: "java",
-            go: "go",
-            rust: "rs",
-            csharp: "cs",
-            php: "php",
-        };
-
-        const ext = extensionMap[language] || "txt";
-        downloadFile(`simpleprogram.${ext}`, code);
-    };
-
 
     return (
         <>
@@ -65,7 +47,7 @@ export default function EditorPage() {
                     </div>
                     <div className="flex justify-between">
                         <div className="m-4">
-                            <Button onClick={handleSave}>Download Snippet</Button>
+                            <HandleSave language={language} code={code} />
                         </div>
                         <div className="m-4">
                             <SeriousModeButton />
@@ -100,15 +82,4 @@ export default function EditorPage() {
             </div>
         </>
     )
-}
-function downloadFile(filename: string, content: string) {
-    const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    a.click();
-
-    URL.revokeObjectURL(url);
 }
